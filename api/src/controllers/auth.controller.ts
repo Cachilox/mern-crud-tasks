@@ -9,9 +9,7 @@ export const register = async ({ body }: Request, res: Response) => {
   const userFound = await User.findOne({ email });
 
   if (userFound) {
-    return res.status(400).json({
-      message: ["The email is already in use"],
-    });
+    return res.status(400).json(["The email is already in use"]);
   }
 
   const passHash = await encrypt(password);

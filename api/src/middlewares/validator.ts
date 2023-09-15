@@ -8,6 +8,8 @@ export const validateSchema =
       schema.parse(body);
       return next();
     } catch (error: any) {
-      return res.status(400).json({ error: error.errors.map((error: ZodError) => error.message) });
+      return res
+        .status(400)
+        .json(error.errors.map((error: ZodError) => error.message));
     }
   };
