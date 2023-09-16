@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import Task from "../models/task.model";
+import { CustomRequest } from "../interface/types";
 
-export const getTasks = async ({ user }: Request, res: Response) => {
+export const getTasks = async ({ user }: CustomRequest, res: Response) => {
   try {
     const tasks = await Task.find({
       user: user.id,
@@ -25,7 +26,7 @@ export const getTask = async ({ params }: Request, res: Response) => {
   }
 };
 
-export const createTask = async ({ body, user }: Request, res: Response) => {
+export const createTask = async ({ body, user }: CustomRequest, res: Response) => {
   try {
     const { title, description, date } = body;
 

@@ -1,7 +1,20 @@
-import { User } from "../interface/types";
-import axios from 'axios'
-const API = import.meta.env.VITE_API_URL;
+import { UserLogin, UserRegister } from "../interface";
+import axios from "./axios";
 
-export const registerRequest = async (user: User) => {
-  return axios.post(`${API}/register`, user)
+export const registerRequest = (user: UserRegister) => {
+  return axios.post("/auth/register", user);
+};
+
+export const loginRequest = (user: UserLogin) => {
+  return axios.post("/auth/login", user);
+};
+
+export const verifyTokenRequest = (token: string) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  
+  return axios.get("/auth/verify", config);
 };

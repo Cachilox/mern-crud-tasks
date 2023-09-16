@@ -1,9 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import jwt, { VerifyErrors } from "jsonwebtoken";
 import { SECRET_KEY } from "../config";
+import { CustomRequest } from "../interface/types";
 
 export const authRequired = (
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
