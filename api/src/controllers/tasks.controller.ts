@@ -10,7 +10,7 @@ export const getTasks = async ({ user }: CustomRequest, res: Response) => {
 
     return res.json(tasks);
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -22,7 +22,7 @@ export const getTask = async ({ params }: Request, res: Response) => {
 
     return res.json(TaskFound);
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -40,7 +40,7 @@ export const createTask = async ({ body, user }: CustomRequest, res: Response) =
     const savedTask = await newTask.save();
     return res.json(savedTask);
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -50,7 +50,7 @@ export const deleteTask = async ({ params }: Request, res: Response) => {
     if (!deletedTask) return res.json({ message: "Task not found" });
     return res.sendStatus(204);
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -62,6 +62,6 @@ export const updateTask = async ({ params, body }: Request, res: Response) => {
     if (!task) return res.json({ message: "Task not found" });
     return res.json(task);
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };

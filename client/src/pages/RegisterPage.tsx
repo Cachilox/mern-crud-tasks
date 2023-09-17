@@ -2,6 +2,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../hooks";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Input, Button } from "../components/ui";
 
 type Inputs = {
   username: string;
@@ -38,55 +39,52 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="bg-zinc-800 min-w-[26rem] max-w-[26rem] p-8 rounded-md m-2">
-      <h1 className="text-2xl font-bold mb-2">Register</h1>
+    <div className="w-full min-h-[calc(100vh-6rem)] flex items-center justify-center">
+      <div className="bg-zinc-800 min-w-[26rem] max-w-[26rem] p-8 rounded-md m-2">
+        <h1 className="text-2xl font-bold mb-2">Register</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          {...register("username", { required: true })}
-          className="w-full bg-zinc-700 text-white px-4 rounded-md my-2 p-2"
-          placeholder="Username"
-        />
-        {errors.username && (
-          <p className="text-red-500">Username is required</p>
-        )}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            type="text"
+            {...register("username", { required: true })}
+            placeholder="Username"
+          />
+          {errors.username && (
+            <p className="text-red-500">Username is required</p>
+          )}
 
-        <input
-          type="email"
-          {...register("email", { required: true })}
-          className="w-full bg-zinc-700 text-white px-4 rounded-md my-2 p-2"
-          placeholder="Email"
-        />
-        {errors.email && <p className="text-red-500">Email is required</p>}
+          <Input
+            type="email"
+            {...register("email", { required: true })}
+            placeholder="Email"
+          />
+          {errors.email && <p className="text-red-500">Email is required</p>}
 
-        <input
-          type="password"
-          {...register("password", { required: true })}
-          className="w-full bg-zinc-700 text-white px-4 rounded-md my-2 p-2"
-          placeholder="Password"
-        />
-        {errors.password && (
-          <p className="text-red-500">Password is required</p>
-        )}
+          <Input
+            type="password"
+            {...register("password", { required: true })}
+            placeholder="Password"
+          />
+          {errors.password && (
+            <p className="text-red-500">Password is required</p>
+          )}
 
-        {registerErrors?.map((error: string, index: number) => (
-          <div key={index} className="text-red-500">
-            {error}
-          </div>
-        ))}
+          {registerErrors?.map((error: string, index: number) => (
+            <div key={index} className="text-red-500">
+              {error}
+            </div>
+          ))}
 
-        <button
-          type="submit"
-          className="bg-slate-800 px-4 py-2 rounded-md mt-4"
-        >
-          Register
-        </button>
-      </form>
+          <Button name="form">Register</Button>
+        </form>
 
-      <p className="flex gap-x-2 mt-2">
-        Already have an account? <Link className="text-sky-500" to="/login">Login</Link>
-      </p>
+        <p className="flex gap-x-2 mt-2">
+          Already have an account?{" "}
+          <Link className="text-sky-500" to="/login">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

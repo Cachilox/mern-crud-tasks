@@ -1,6 +1,7 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import {
   loginRequest,
+  logoutRequest,
   registerRequest,
   verifyTokenRequest,
 } from "../services/auth";
@@ -15,6 +16,7 @@ interface AuthContextInterface {
   errors: string[];
   signin: (user: UserLogin) => void;
   isLoading: boolean | null;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -24,6 +26,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   errors: [],
   signin: () => {},
   isLoading: null,
+  logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -35,7 +38,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signup = async (user: UserRegister) => {
     try {
       const res = await registerRequest(user);
-      console.log(res);
       if (res.status === 200 || res.status === 201) {
         setUser(res.data);
         setIsAuthenticated(true);
@@ -55,6 +57,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const res = await loginRequest(user);
       setUser(res.data);
       setIsAuthenticated(true);
+    } catch (error) {
+      let errorMessage = "An error occurred";
+      if (axios.isAxiosError(error)) {
+        const err = (errorMessage = error.response?.data || errorMessage);
+        setErrors(err);
+      }
+      throw errorMessage;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await logoutRequest();
+      Cookies.remove("token");
+      setUser(null);
+      setIsAuthenticated(false);
     } catch (error) {
       let errorMessage = "An error occurred";
       if (axios.isAxiosError(error)) {
@@ -105,6 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         errors,
         signin,
         isLoading,
+        logout,
       }}
     >
       {children}

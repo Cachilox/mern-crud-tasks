@@ -7,10 +7,6 @@ body {
   background-color: #202020;
   color: #fff;
   box-sizing: border-box;
-  display: flex;
-  place-items: center;
-  justify-content: center;
   min-width: 320px;
-  min-height: 100vh;
 }
 
